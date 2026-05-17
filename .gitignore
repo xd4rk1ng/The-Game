@@ -3,6 +3,7 @@
 
 # IDE workspace files
 .vscode
+notes/
 
 # Example CMAKE configuration project
 exampleCmake
