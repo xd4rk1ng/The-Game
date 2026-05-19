@@ -9,8 +9,8 @@ Atlas *Atlas::s_instance = nullptr;
 Rectangle Atlas::getSourceRectangle(SourceType sourceType)
 {
     return {
-        static_cast<float>(sourceType % COL_NUMBERS * SPRITE_LENGTH),
-        static_cast<float>(sourceType / COL_NUMBERS * SPRITE_LENGTH),
+        static_cast<float>((int)sourceType % COL_NUMBERS * SPRITE_LENGTH),
+        static_cast<float>((int)sourceType / COL_NUMBERS * SPRITE_LENGTH),
         static_cast<float>(SPRITE_LENGTH),
         static_cast<float>(SPRITE_LENGTH),
     };
@@ -28,15 +28,6 @@ const Atlas *Atlas::instance()
     return s_instance;
 }
 
-void Atlas::destroyInstance()
-{
-    delete s_instance;
-    s_instance = nullptr;
-}
-
-/*
-    Private
-*/
 Atlas::Atlas() : m_spriteSheet(LoadTexture(FILE_PATH.data())) {}
 
 Atlas::~Atlas() { UnloadTexture(m_spriteSheet); }

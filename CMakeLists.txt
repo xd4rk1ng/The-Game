@@ -32,6 +32,8 @@ fetchcontent_makeavailable(raylib)
 # Compile libraries
 set(SourceFiles
     src/Atlas.cpp
+    src/PhysicsEntity.cpp
+    src/Starship.cpp
 )
 add_library(atlas ${SourceFiles})
 

@@ -1,11 +1,13 @@
+#pragma once
 #include <raylib.h>
 
-struct PhysicsProperties{
-    float mass;
-    float size;
-    Vector2 coordinates; // m
-    Vector2 speed; // m/s
-    Vector2 acceleration; // m/s^2
-    int bearing; // degrees
-    int rotationSpeed; // degrees/s    
+struct PhysicsProperties
+{
+    float mass = 0;
+    float size = 100;
+    Vector2 coordinates{20, 20};  
+    Vector2 velocity{0, 0};     
+    Vector2 acceleration{0, 0}; 
+    int bearing = 0;            
+    int rotationSpeed = 0;      
 };
