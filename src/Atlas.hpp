@@ -13,9 +13,8 @@ private:
 
 public:
     static const Atlas *instance();
-    static void destroyInstance();
 
-    enum SourceType
+    enum class SourceType
     {
         SPACESHIP = 0,
         PLANET = 1,
