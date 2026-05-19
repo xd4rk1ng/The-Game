@@ -11,7 +11,7 @@ The player may interact with the ship by:
 - Accelerating it;
 - Buy parts or refuel it;
 
-
+## Notice about quality
 > This is my first semi-serious project in C/C++. The goal is to experiment, have fun, and reach enlightenment!
 
 _The Game_ is still in a conceptual phase, meaning I don't know what the f___ I'll be building in terms of theme. The only things I know for a fact for now are:
