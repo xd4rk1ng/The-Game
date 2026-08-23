@@ -15,15 +15,19 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "The Game");
     auto *atlas = Atlas::instance();
     auto *player = new Starship();
+    auto *player = new Starship();
     SetTargetFPS(60); // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
+    float deltaT;
     float deltaT;
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         // Update
         //----------------------------------------------------------------------------------
+        deltaT = GetFrameTime();
+        player->update(deltaT);
         deltaT = GetFrameTime();
         player->update(deltaT);
         //----------------------------------------------------------------------------------
