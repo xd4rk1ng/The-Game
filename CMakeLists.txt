@@ -9,18 +9,24 @@ if(MSVC)
 endif()
 
 ## PROJECT OUTPUT DIR ##
+# Compute a bin/<OS>-<bitness>/<config> path so Debug/Release builds and
+# different platforms don't overwrite each other's binaries.
 set(OSBitness 32)
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(OSBitness 64)
 endif()
 
 set(OutputDir "${CMAKE_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}-${OSBitness}/${CMAKE_BUILD_TYPE}")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OutputDir}/lib")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OutputDir}")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OutputDir}")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OutputDir}/lib")  # static libs (.a/.lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OutputDir}")      # shared libs (.so/.dll)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OutputDir}")      # executables
 
 ## LIBRARY LISTING
 # Fetch raylib
+# FetchContent downloads + configures raylib as a subproject at configure
+# time, instead of requiring it to be installed on the system. This runs
+# once here at the top level; every target below just links against the
+# `raylib` target it produces.
 include(FetchContent)
 fetchcontent_declare(
     raylib
@@ -29,17 +35,15 @@ fetchcontent_declare(
 )
 fetchcontent_makeavailable(raylib)
 
-# Compile libraries
-set(SourceFiles
-    src/Atlas.cpp
-    src/PhysicsEntity.cpp
-    src/Starship.cpp
-)
-add_library(atlas ${SourceFiles})
-
-include_directories(src)
+# Descend into src/, which just routes further into src/core and
+# src/entities — each of those defines its own library target
+# (`core`, `entities`).
+add_subdirectory(src)
 
 add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(atlas PRIVATE raylib)
-target_compile_definitions(atlas PRIVATE PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib atlas)
+
+# Only `entities` needs to be named here: it links `core` PUBLIC, and
+# `core` links raylib PUBLIC, so both are pulled in transitively. Anything
+# a header exposes has to be PUBLIC somewhere in that chain for this to
+# work — see src/core/CMakeLists.txt for why.
+target_link_libraries(${PROJECT_NAME} PRIVATE entities)

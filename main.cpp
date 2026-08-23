@@ -1,6 +1,6 @@
 #include <raylib.h>
 #include <Atlas.hpp>
-#include "src/Starship.hpp"
+#include "src/entities/Starship.hpp"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -33,7 +33,7 @@ int main(void)
         BeginDrawing();
 
         ClearBackground(BLACK);
-        player->draw();
+        player->draw(); // TODO: testing purposes
         // DrawTexturePro(atlas->getTexture(), atlas->getSourceRectangle(Atlas::SourceType::SPACESHIP), (Rectangle){0, 0, 200, 200}, (Vector2){8, 8}, 0, WHITE);
         // DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
